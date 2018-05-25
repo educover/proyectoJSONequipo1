@@ -24,6 +24,7 @@ let createTaskItemTemplate = (text, id) =>
 </div>
 `
 let addTask = function (evento) {
+    if  (evento.type==='click' || evento.keyCode===13){
     let node = $(evento.target).parent()
     let listNode = node.parent();
     let input = node[0].children[0]; // vanilla Js
@@ -60,6 +61,7 @@ let addTask = function (evento) {
             // if the backend failed
             console.error('no se pudo guardar la tarea, inténtelo de nuevo:', e)
         })
+    }
 };
 
 let deleteTask = function (taskId, listId) {
@@ -105,6 +107,8 @@ let paintList = (listName, listId) => {
 }
 
 let addList = (evento) => {
+
+   if  (evento.type==='click' || evento.keyCode===13){
    
     // recoger el nombre de la lista
     let listName = $('.addList input').val().trim();
@@ -132,6 +136,7 @@ let addList = (evento) => {
         .catch((e) => {
             console.error('no se pudo añadir la lista, inténtelo de nuevo:', e)
         })
+    }
 };
 
 
@@ -191,8 +196,10 @@ let callbackOnReady = () => {
 
 
     $('.addList button').on('click', addList);
+    $('.addList input').on('keypress', addList);
     $('.lists').on('click', '.listHeader button', removeList);
     $('.lists').on('click', '.addTask button', addTask);
+    $('.lists').on('keypress', '.addTask input', addTask);
     $('.lists').on('click', '.taskItem button', removeTask);
 }
 $(document).ready(callbackOnReady);
